@@ -1,4 +1,4 @@
-package com.example.lqa.shiyu_search;
+package com.threeteam.shiyu.appNotify;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.lqa.shiyu_search", appContext.getPackageName());
+        assertEquals("com.threeteam.shiyu.appNotify", appContext.getPackageName());
     }
 }

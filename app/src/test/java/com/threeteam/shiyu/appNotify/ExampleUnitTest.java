@@ -1,4 +1,4 @@
-package com.example.lqa.shiyu_search;
+package com.threeteam.shiyu.appNotify;
 
 import org.junit.Test;
 
