@@ -3,6 +3,13 @@ package com.threeteam.shiyu.appNotify;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+enum web{
+    MANGGUOTV,
+    TENGXUN,
+    BILIBILI,
+    YOUKU,
+    AIQIYI
+}
 public class NotifyActivity extends AppCompatActivity {
 
     @Override
