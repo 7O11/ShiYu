@@ -10,7 +10,7 @@ enum web{
     YOUKU,
     AIQIYI
 }
-public class NotifyActivity extends AppCompatActivity {
+public class MailBoxActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
