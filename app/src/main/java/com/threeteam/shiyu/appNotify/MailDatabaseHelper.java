@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MailDatabaseHelper extends SQLiteOpenHelper {
     public static final String MAILBOX = "mailbox";
     public static final String CREATE_MAIL_BOX = "create table "+MAILBOX+" ("
-            + "id integer primary key autoincrement, "
-            + "title text, "
-            + "content text, "
-            + "read_flag integer, "
-            + "star integer)";
+            + "title text primary key, "
+            + "content text primary key, "  //标题和内容组成key
+            + "read_flag integer, " //未读：1
+            + "receive_time text, "    //消息接收时间
+            + "web_id integer)";    //更新来源
     private Context mailContext;
 
     public MailDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){

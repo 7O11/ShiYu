@@ -14,12 +14,12 @@ public class Notifier {
     private static final String UPDATE_CONTENT_MID = "》又有更新啦，最新状态：【";
     private static final String UPDATE_CONTENT_RIGHT = "】，快去看看吧~";
     //检查更新
-    private MailDatabaseHelper mailHelper;
+    private static MailDatabaseHelper mailHelper;
     public Notifier(Activity activity){
         mailHelper = new MailDatabaseHelper(activity, MAILBOX, null, 1);
     }
 
-    public void checkUpdate(SQLiteDatabase collectdb){
+    public static void checkUpdate(SQLiteDatabase collectdb){
         //站内信数据库
         SQLiteDatabase maildb = mailHelper.getWritableDatabase();
         //查询线程
@@ -55,7 +55,7 @@ public class Notifier {
         }
 
     }
-    private int pickData(String str){
+    private static int pickData(String str){
         int len = str.length(),num = 0;
         char ch;
         for(int i = 0; i<len; i++){
