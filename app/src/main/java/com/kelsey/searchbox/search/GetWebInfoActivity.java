@@ -10,10 +10,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.kelsey.searchbox.webinfo.BilibiliInfo;
+import com.kelsey.searchbox.webinfo.IqiyiInfo;
+import com.kelsey.searchbox.webinfo.ListElement;
+import com.kelsey.searchbox.webinfo.MangguotvInfo;
+import com.kelsey.searchbox.webinfo.TencentInfo;
+import com.kelsey.searchbox.webinfo.YoukuInfo;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +32,7 @@ public class GetWebInfoActivity extends AppCompatActivity {
     private Handler handler;
     private ListView lv;
     private String search_content;
+    Message msg = new Message();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +52,7 @@ public class GetWebInfoActivity extends AppCompatActivity {
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == 1){
+                if(msg.arg1 == 5){
                     adapter = new VedioAdapter(GetWebInfoActivity.this,vedioList);
                     lv.setAdapter(adapter);
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,26 +71,45 @@ public class GetWebInfoActivity extends AppCompatActivity {
     }
 
     private void getNews(){
+        msg.arg1 = 0;
+//        MangguotvInfo mangguotvInfo = new MangguotvInfo(search_content,vedioList,handler);
+//        BilibiliInfo bilibiliInfo = new BilibiliInfo(search_content,vedioList,handler);
+//        TencentInfo tencentInfo = new TencentInfo(search_content,vedioList,handler);
+//        YoukuInfo youkuInfo = new YoukuInfo(search_content,vedioList,handler);
+//        IqiyiInfo iqiyiInfo = new IqiyiInfo(search_content,vedioList,handler);
+//        mangguotvInfo.message = msg;
+//        bilibiliInfo.message = msg;
+//        tencentInfo.message = msg;
+//        youkuInfo.message = msg;
+//        iqiyiInfo.message = msg;
+//        mangguotvInfo.start();
+//        bilibiliInfo.start();
+//        tencentInfo.start();
+//        youkuInfo.start();
+//        iqiyiInfo.start();
+
+        //芒果tv
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    Message msg = new Message();
-                    //芒果tv
-                    String MangguoUrl = "https://so.mgtv.com/so/k-" + search_content;
+                //芒果tv
+                String MangguoUrl = "https://so.mgtv.com/so/k-" + search_content;
 
-                    //获取网页首页数据
-                    Document doc = Jsoup.connect(MangguoUrl).get();
-                    Elements urlLinks = doc.select("div.so-result-info.search-television.clearfix");    //解析来获取标题与链接地址
+                //获取网页首页数据
+                Document doc = null;
+                Elements urlLinks;
+                try {
+                    doc = Jsoup.connect(MangguoUrl).get();
+                    urlLinks = doc.select("div.so-result-info.search-television.clearfix");    //解析来获取标题与链接地址
 
                     //for循环遍历获取首页所有视频
-                    for(int j = 0;j < urlLinks.size();j++){
+                    for (int j = 0; j < urlLinks.size(); j++) {
                         boolean isImago = false;
                         String title, url, desc, pic, score;
                         title = urlLinks.get(j).select("div.vari_pho").select("img").attr("alt");
-                        if(title.equals("")){
+                        if (title.equals("")) {
                             title = urlLinks.get(j).select("p.result-pic.result-pic-imgo").select("img").attr("alt");
-                            if(title!="")   isImago = true;
+                            if (title != "") isImago = true;
                             url = "https:" + urlLinks.get(j).select("p.result-til").select("a").attr("href");
                             desc = urlLinks.get(j).select("div.desc_text").text();
                             pic = "https:" + urlLinks.get(j).select("p.result-pic.result-pic-imgo").select("img").attr("src");
@@ -93,17 +121,28 @@ public class GetWebInfoActivity extends AppCompatActivity {
                             score = urlLinks.get(j).select("div.tele_hd").select("span.score").text();   //解析来获取评分
                         }
                         String origin = "芒果TV";
-                        if(isImago){
-                            Item vedio = new Item(title,url,desc,pic,score,origin);
-                            vedioList.add(vedio);
+                        if (isImago) {
+                            Item vedio = new Item(title, url, desc, pic, score, origin);
+                            ListElement.addElement(vedioList, vedio);
                         }
                     }
+                    msgCount();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+         }).start();
 
-                    urlLinks = doc.select("div.result-content clearfix");
+        //Bilibili
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Document doc;
+                Elements urlLinks;
+                //bilibili
+                String BilibiliUrl = "https://search.bilibili.com/all?keyword=" + search_content + "&from_source=banner_search";
 
-                    //bilibili
-                    String BilibiliUrl = "https://search.bilibili.com/all?keyword=" + search_content + "&from_source=banner_search";
-
+                try {
                     doc = Jsoup.connect(BilibiliUrl).get();
                     urlLinks = doc.select("li.synthetical");    //解析来获取标题与链接地址
 
@@ -119,12 +158,26 @@ public class GetWebInfoActivity extends AppCompatActivity {
                         String score = urlLinks.get(j).select("div.score-num").text();   //解析来获取评分
                         String origin = "Bilibili";
                         Item vedio = new Item(title,url,desc,pic,score,origin);
-                        vedioList.add(vedio);
+//            vedioList.add(vedio);
+                        ListElement.addElement(vedioList,vedio);
                     }
+                    msgCount();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
-                    //Tencent
-                    String TencentUrl = "https://v.qq.com/x/search/?q=" + search_content + "&stag=0&smartbox_ab=";
+        //Tencent
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Document doc;
+                Elements urlLinks;
+                //Tencent
+                String TencentUrl = "https://v.qq.com/x/search/?q=" + search_content + "&stag=0&smartbox_ab=";
 
+                try {
                     doc = Jsoup.connect(TencentUrl).get();
                     urlLinks = doc.select("div.result_item.result_item_v");
                     String icon_text;
@@ -149,13 +202,28 @@ public class GetWebInfoActivity extends AppCompatActivity {
                         if(icon_text.equals("")||icon_text.equals("腾讯视频")){
                             String origin = "腾讯视频";
                             Item vedio = new Item(title,url,desc,pic,score,origin);
-                            vedioList.add(vedio);
+//                    vedioList.add(vedio);
+                            ListElement.addElement(vedioList,vedio);
                         }
                     }
+                    msgCount();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
-                    //Youku
-                    String YoukuUrl = "https://so.youku.com/search_video/q_" + search_content;
+        //Youku
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Document doc;
+                Elements urlLinks;
+                String icon_text;
+                //Youku
+                String YoukuUrl = "https://so.youku.com/search_video/q_" + search_content;
 
+                try {
                     doc = Jsoup.connect(YoukuUrl).get();
                     urlLinks = doc.select(".arrow-up.mod-filter");
 
@@ -173,14 +241,30 @@ public class GetWebInfoActivity extends AppCompatActivity {
                         if(icon_text.equals("播放源: 优酷")){
                             String origin = "优酷";
                             Item vedio = new Item(title,url,desc,pic,score,origin);
-                            vedioList.add(vedio);
+//                    vedioList.add(vedio);
+                            ListElement.addElement(vedioList,vedio);
                         }
                     }
+                    msgCount();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
-                    //爱奇艺
-                    String AiqiyiUrl = "https://so.iqiyi.com/so/q_" + search_content;
+        //Iqiyi
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Document doc;
+                Elements urlLinks;
+                String icon_text;
+                //爱奇艺
+                String AiqiyiUrl = "https://so.iqiyi.com/so/q_" + search_content;
 
+                try {
                     doc = Jsoup.connect(AiqiyiUrl).get();
+
                     urlLinks = doc.select("li.list_item");
 
                     //for循环遍历获取首页所有视频
@@ -202,17 +286,25 @@ public class GetWebInfoActivity extends AppCompatActivity {
                         if(icon_text.contains("爱奇艺")){
                             String origin = "爱奇艺";
                             Item vedio = new Item(title,url,desc,pic,score,origin);
-                            vedioList.add(vedio);
+//                    vedioList.add(vedio);
+                            ListElement.addElement(vedioList,vedio);
                         }
                     }
-                    msg = new Message();
-                    msg.what = 1;
-                    handler.sendMessage(msg);
-
-                }catch (Exception e){
+                    msgCount();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
+
+    }
+
+    public void msgCount(){
+        synchronized (msg){
+            msg.arg1++;
+            if(msg.arg1==5){
+                handler.sendMessage(msg);
+            }
+        }
     }
 }
