@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -199,32 +200,53 @@ public class GetWebInfoActivity extends AppCompatActivity {
             public void run() {
                 Document doc;
                 Elements urlLinks;
-                String icon_text;
+                String icon_text, web_info, title, url, desc, pic, score;
                 //Youku
                 String YoukuUrl = "https://so.youku.com/search_video/q_" + search_content;
 
                 try {
                     doc = Jsoup.connect(YoukuUrl).get();
-                    urlLinks = doc.select(".arrow-up.mod-filter");
-
-                    //for循环遍历获取首页所有视频
-                    for(int j = 0;j < urlLinks.size();j++){
-                        String title = urlLinks.get(j).select("h2.spc-lv-1").select("a").attr("title");
-                        String url = urlLinks.get(j).select("p.row-ellipsis").select("a").attr("href");
+                    web_info = doc.toString();
+                    int is_find_item = web_info.indexOf("<div class=\\\"sk-mod\\\">");
+                    while(is_find_item!=-1){
+                        int title_start = web_info.indexOf("<a  target=\\\"_blank\\\"  data-spm=\\\"dtitle\\\" title=\\", is_find_item) + "<a  target=\\\"_blank\\\"  data-spm=\\\"dtitle\\\" title=\\".length() + 1;
+                        int test0 = "<a  target=\\\"_blank\\\"  data-spm=\\\"dtitle\\\" title=\\".length();
+                        int test1 = web_info.indexOf("<a  target=\\\"_blank\\\"  data-spm=\\\"dtitle\\\" title=\\", is_find_item);
+                        int title_end = web_info.indexOf("\\", title_start);
+                        title = web_info.substring(title_start, title_end);
+                        int url_start = web_info.indexOf("data-spm=\\\"ddetail\\\"  class=\\\"row-end\\\" href=\\\"", is_find_item) + "data-spm=\\\"ddetail\\\"  class=\\\"row-end\\\" href=\\\"".length();
+                        int url_end = web_info.indexOf("\"", url_start) - 1;
+                        url = web_info.substring(url_start, url_end);
                         Document doc0 = Jsoup.connect(url).get();
-                        String desc = doc0.select("li.p-row.p-intro").select("span.text").text();
-//                        String desc = urlLinks.get(j).select("div.info_item.info_item_desc").select("span.desc_text").text().replace("\n","").replace(" ","");  //获取简介
-                        //获取图片
-                        String pic = "https:" + urlLinks.get(j).select("div.pack-cover").select("img").attr("src");
-                        String score = doc0.select("li.p-score").select("span.star-num").text();
-                        icon_text = urlLinks.get(j).select("span.source").text();
-                        if(icon_text.equals("播放源: 优酷")){
+                        desc = doc0.select("li.p-row.p-intro").select("span.text").text();
+                        pic = doc0.select(".mod.mod-new").select(".p-thumb").select("img").attr("src");
+                        int icon_start = web_info.indexOf("播放源:</label> 优酷", is_find_item);
+                        score = doc0.select("li.p-score").select("span.star-num").text();
+                        if(icon_start!=-1){
                             String origin = "优酷";
                             Item vedio = new Item(title,url,desc,pic,score,origin);
-//                    vedioList.add(vedio);
                             ListElement.addElement(vedioList,vedio);
                         }
+                        is_find_item = web_info.indexOf("class=\"sk-mod\"", is_find_item);
                     }
+//                    //for循环遍历获取首页所有视频
+//                    for(int j = 0;j < urlLinks.size();j++){
+//                        title = urlLinks.get(j).select("h2.spc-lv-1").select("a").attr("title");
+//                        url = urlLinks.get(j).select("p.row-ellipsis").select("a").attr("href");
+//                        Document doc0 = Jsoup.connect(url).get();
+//                        desc = doc0.select("li.p-row.p-intro").select("span.text").text();
+////                        String desc = urlLinks.get(j).select("div.info_item.info_item_desc").select("span.desc_text").text().replace("\n","").replace(" ","");  //获取简介
+//                        //获取图片
+//                        pic = "https:" + urlLinks.get(j).select("div.pack-cover").select("img").attr("src");
+//                        score = doc0.select("li.p-score").select("span.star-num").text();
+//                        icon_text = urlLinks.get(j).select("span.source").text();
+//                        if(icon_text.equals("播放源: 优酷")){
+//                            String origin = "优酷";
+//                            Item vedio = new Item(title,url,desc,pic,score,origin);
+////                    vedioList.add(vedio);
+//                            ListElement.addElement(vedioList,vedio);
+//                        }
+//                    }
                     msgCount();
                 } catch (IOException e) {
                     e.printStackTrace();

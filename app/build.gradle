@@ -28,6 +28,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':library')
     implementation 'org.jsoup:jsoup:1.11.3'
-    implementation 'com.lzy.widget:view-core:0.1.5'
+    implementation ('com.lzy.widget:view-core:0.1.5'){
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
 //    implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
