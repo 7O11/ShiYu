@@ -10,12 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.kelsey.searchbox.webinfo.BilibiliInfo;
-import com.kelsey.searchbox.webinfo.IqiyiInfo;
 import com.kelsey.searchbox.webinfo.ListElement;
-import com.kelsey.searchbox.webinfo.MangguotvInfo;
-import com.kelsey.searchbox.webinfo.TencentInfo;
-import com.kelsey.searchbox.webinfo.YoukuInfo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -72,21 +67,6 @@ public class GetWebInfoActivity extends AppCompatActivity {
 
     private void getNews(){
         msg.arg1 = 0;
-//        MangguotvInfo mangguotvInfo = new MangguotvInfo(search_content,vedioList,handler);
-//        BilibiliInfo bilibiliInfo = new BilibiliInfo(search_content,vedioList,handler);
-//        TencentInfo tencentInfo = new TencentInfo(search_content,vedioList,handler);
-//        YoukuInfo youkuInfo = new YoukuInfo(search_content,vedioList,handler);
-//        IqiyiInfo iqiyiInfo = new IqiyiInfo(search_content,vedioList,handler);
-//        mangguotvInfo.message = msg;
-//        bilibiliInfo.message = msg;
-//        tencentInfo.message = msg;
-//        youkuInfo.message = msg;
-//        iqiyiInfo.message = msg;
-//        mangguotvInfo.start();
-//        bilibiliInfo.start();
-//        tencentInfo.start();
-//        youkuInfo.start();
-//        iqiyiInfo.start();
 
         //芒果tv
         new Thread(new Runnable() {
