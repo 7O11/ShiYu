@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <com.kelsey.searchbox.library.widget.SearchListLayout
         android:layout_width="match_parent"
@@ -14,4 +15,49 @@
         app:search_baground="@drawable/search_baground_shap">
     </com.kelsey.searchbox.library.widget.SearchListLayout>
 
-</LinearLayout>
+    <com.lzy.widget.AlphaIndicator
+        android:id="@+id/alphaIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom">
+
+        <com.lzy.widget.AlphaView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:av_tabIconNormal="@mipmap/search_normal"
+            app:av_tabIconSelected="@mipmap/search_selected"
+            app:av_tabText="首页"
+            app:av_tabTextSize="14sp"
+            app:av_textColorNormal="#999999"
+            app:av_textColorSelected="#46c01b"/>
+
+        <com.lzy.widget.AlphaView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:av_tabIconNormal="@mipmap/calendar_normal"
+            app:av_tabIconSelected="@mipmap/calendar_selected"
+            app:av_tabText="日历"
+            app:av_tabTextSize="14sp"
+            app:av_textColorNormal="#999999"
+            app:av_textColorSelected="#46c01b"/>
+
+        <com.lzy.widget.AlphaView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:av_tabIconNormal="@mipmap/collect_normal"
+            app:av_tabIconSelected="@mipmap/collect_selected"
+            app:av_tabText="收藏夹"
+            app:av_tabTextSize="14sp"
+            app:av_textColorNormal="#999999"
+            app:av_textColorSelected="#46c01b"/>
+    </com.lzy.widget.AlphaIndicator>
+
+</RelativeLayout>
