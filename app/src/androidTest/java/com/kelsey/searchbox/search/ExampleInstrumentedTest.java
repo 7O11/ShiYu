@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.tangguna.searchbox.searchbox", appContext.getPackageName());
+        assertEquals("com.kelsey.shiyu.searchbox", appContext.getPackageName());
     }
 }
