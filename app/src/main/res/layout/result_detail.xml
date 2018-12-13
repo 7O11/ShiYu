@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--android:orientation="vertical"-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left">
+
+        <ImageView
+            android:id="@+id/vedio_pic"
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="120dp"
+            android:maxHeight="150dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right">
+
+        <TextView
+            android:id="@+id/vedio_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:maxWidth="150dp"
+            android:maxHeight="28dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/vedio_socre"
+            android:text="评分: "
+            android:textColor="#000"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/vedio_socre"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/mlcorange"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/vedio_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/vedio_title"
+            android:maxHeight="86dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="30dp"
+            android:textColor="#000"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/vedio_origin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="180dp"
+            android:textColor="#69686c"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
