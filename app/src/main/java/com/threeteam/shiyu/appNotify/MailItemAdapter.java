@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static com.threeteam.shiyu.appNotify.web.BILIBILI;
+import static com.threeteam.shiyu.appNotify.web.MANGGUOTV;
+import static com.threeteam.shiyu.appNotify.web.TENGXUN;
+import static com.threeteam.shiyu.appNotify.web.YOUKU;
+
 public class MailItemAdapter extends ArrayAdapter<MailItem> {
     private int resourceId;
     public MailItemAdapter(Context context, int textViewResourceId,
@@ -33,6 +38,7 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {
             viewHolder.webIcon = (ImageView) view.findViewById(R.id.web_icon);
             viewHolder.mailTitle = (TextView)view.findViewById(R.id.mail_title);
             viewHolder.mailContent = (TextView)view.findViewById(R.id.mail_content);
+            viewHolder.mailTime = (TextView)view.findViewById(R.id.mail_receive_time) ;
             view.setTag(viewHolder);
         }else{
             view = convertView;
@@ -40,14 +46,12 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {
         }
         viewHolder.mailTitle.setText(mItem.getTitle());
         viewHolder.mailContent.setText(mItem.getContent());
+        viewHolder.mailTime.setText(mItem.getTime());
         if(mItem.getUnread()){
-            view.setBackgroundResource(R.mipmap.mail_unread_bg);
-            viewHolder.webIcon.setBackgroundResource(R.mipmap.mail_id_unread_bg);
+            viewHolder.webIcon.setBackgroundResource(id2web(mItem.getIconId(), true));
         }
         else{
-            viewHolder.webIcon.setBackgroundResource(R.mipmap.mail_id_read_bg);
-            view.setBackgroundResource(R.mipmap.mail_read_bg);
-
+             viewHolder.webIcon.setBackgroundResource(id2web(mItem.getIconId(), false));
         }
         //点击icon，触发列表筛选更新操作
         viewHolder.webIcon.setOnClickListener(new View.OnClickListener(){
@@ -69,33 +73,72 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {
                 mailItemListener.onMailSubjectClick(mItem.getTitle(),mItem.getContent());
             }
         });
+        //长按响应
+        viewHolder.webIcon.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v){
+                return mailItemListener.onItemLongClick(v, position);
+            }
+        });
+        viewHolder.mailTitle.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v){
+                mailItemListener.onItemLongClick(v, position);
+                return true;
+            }
+        });
+        viewHolder.mailContent.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v){
+                mailItemListener.onItemLongClick(v, position);
+                return true;
+            }
+        });
         return view;
     }
     //内部textView的监听接口
     public interface onMailItemListener{
-        void onMailIconClick(View v, int position);
+        void onMailIconClick(View v, int iconId);
         void onMailSubjectClick(String title, String content);
+        boolean onItemLongClick(View v, int position);
     }
     private onMailItemListener mailItemListener;
     public void setOnMailItemClickListener(onMailItemListener mailItemListener){
         this.mailItemListener = mailItemListener;
     }
+    private int id2web(int id, boolean unread){
+        if(unread){
+            if(id == MANGGUOTV.ordinal()) return R.mipmap.mangguotv_icon_;
+            else if(id == YOUKU.ordinal()) return R.mipmap.youku_icon_;
+            else if(id == TENGXUN.ordinal()) return R.mipmap.tengxun_icon_;
+            else if(id == BILIBILI.ordinal()) return R.mipmap.bilibili_icon_;
+            else return R.mipmap.aiqiyi_icon_;
+        }
+        if(id == MANGGUOTV.ordinal()) return R.mipmap.mangguotv_icon;
+        else if(id == YOUKU.ordinal()) return R.mipmap.youku_icon;
+        else if(id == TENGXUN.ordinal()) return R.mipmap.tengxun_icon;
+        else if(id == BILIBILI.ordinal()) return R.mipmap.bilibili_icon;
+        else return R.mipmap.aiqiyi_icon;
+    }
     class ViewHolder{
         ImageView webIcon;
         TextView mailTitle;
         TextView mailContent;
+        TextView mailTime;
     }
 }
 class MailItem{
     private int icon;
     private String title;
     private String content;
-    boolean unread;
-    public MailItem(int id, String t, String c, boolean unread){
+    private boolean unread;
+    private String time;
+    public MailItem(int id, String t, String c, boolean unread, String time){
         this.icon = id;
         this.title = t;
         this.content = c;
         this.unread = unread;
+        this.time = time;
     }
     public int getIconId(){
         return this.icon;
@@ -108,5 +151,8 @@ class MailItem{
     }
     public boolean getUnread(){
         return this.unread;
+    }
+    public String getTime(){
+        return this.time;
     }
 }

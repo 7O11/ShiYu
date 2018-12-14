@@ -2,26 +2,38 @@ package com.threeteam.shiyu.appNotify;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import static com.threeteam.shiyu.appNotify.MailDatabaseHelper.MAILBOX;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import static com.threeteam.shiyu.appNotify.web.*;
 
-public class Notifier {
+public class Notifier{
+    //update flag
+    private boolean flag = false;
     //mail format
-    private static final String UPDATE_TITLE = "更新通知";
-    private static final String UPDATE_CONTENT_LEFT = "哇塞！您追的《";
-    private static final String UPDATE_CONTENT_MID = "》又有更新啦，最新状态：【";
-    private static final String UPDATE_CONTENT_RIGHT = "】，快去看看吧~";
-    //检查更新
-    private static MailDatabaseHelper mailHelper;
-    public Notifier(Activity activity){
-        mailHelper = new MailDatabaseHelper(activity, MAILBOX, null, 1);
+    private static final String UPDATE_TITLE = "更新: ";
+    private static final String UPDATE_CONTENT_LEFT = "最新状态：";
+    private static final String UPDATE_CONTENT_RIGHT = "";
+    //collect db
+    private SQLiteDatabase collectdb;
+    Notifier(SQLiteDatabase c){
+        this.collectdb = c;
     }
 
-    public static void checkUpdate(SQLiteDatabase collectdb){
-        //站内信数据库
-        SQLiteDatabase maildb = mailHelper.getWritableDatabase();
+    public boolean isUpdate() {
+        return flag;
+    }
+
+    //
+    //检查更新
+    public void checkUpdate(){
+        //站内信数据库 MailBoxActivity.maildb
         //查询线程
         NetworkThread thread;
         String latestInfo;
@@ -36,17 +48,19 @@ public class Notifier {
                 thread = new NetworkThread(webs[i], urls[i]);
                 thread.start();
                 thread.join();
-                if((latestInfo = thread.get_latestEpiInfo()) != infos[i]){
+                latestInfo = thread.get_latestEpiInfo();
+                if(!latestInfo.equals(infos[i])){
+                    flag = true;
                     if(latestInfo.matches("\\d+\\-\\d+")){
                         latestInfo = "No."+String.valueOf(pickData(latestInfo));
                     }
                     ContentValues mail = new ContentValues();
-                    mail.put("title", UPDATE_TITLE);
-                    mail.put("content", UPDATE_CONTENT_LEFT+names[i]+UPDATE_CONTENT_MID
-                            + latestInfo + UPDATE_CONTENT_RIGHT);
-                    mail.put("read_flag", 0);
-                    mail.put("star", 0);
-                    maildb.insert(MAILBOX , null, mail);
+                    mail.put("title", UPDATE_TITLE+"《"+names[i]+"》");
+                    mail.put("content", UPDATE_CONTENT_LEFT+ latestInfo);
+                    mail.put("read_flag", 1);
+                    mail.put("receive_time", MailBoxActivity.sDateFormat.format(new Date()));
+                    mail.put("web_id", webs[i].ordinal());
+                    MailBoxActivity.maildb.insert(MailDatabaseHelper.MAILBOX, null, mail);
                 }
             }catch (Exception e){
                 //TODO: thread error , or db error
@@ -55,7 +69,7 @@ public class Notifier {
         }
 
     }
-    private static int pickData(String str){
+    private int pickData(String str){
         int len = str.length(),num = 0;
         char ch;
         for(int i = 0; i<len; i++){
