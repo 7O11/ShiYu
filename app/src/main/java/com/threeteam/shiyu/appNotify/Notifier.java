@@ -35,11 +35,12 @@ public class Notifier{
     public void checkUpdate(){
         //站内信数据库 MailBoxActivity.maildb
         //查询线程
+        Log.i("print_noti","check_update");
         NetworkThread thread;
         String latestInfo;
         //TODO: needs replace
-        String[] urls = {"https://www.iqiyi.com/a_19rrh4i9vt.html"};
-        web[] webs = {AIQIYI};
+        String[] urls = {"https://list.youku.com/show/id_z0f532f6fc8e34beb852e.html?spm=a2h0j.11185381.bpmodule-playpage-righttitle.5~H2~A"};
+        web[] webs = {YOUKU};
         String[] infos = {""};
         String[] names = {"番名"};
         for(int i = 0; i<urls.length; i++){

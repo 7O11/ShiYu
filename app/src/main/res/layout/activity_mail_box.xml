@@ -11,38 +11,50 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:background="#000">
+        <!-- 返回 -->
         <ImageView
             android:id="@+id/back_from_mail"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:src = "@mipmap/mail_back"
             android:scaleType="fitCenter"
-            android:layout_gravity="right"
             android:layout_marginLeft="5dp"/>
+        <!-- 站内信文字 -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_marginStart="10dp"
             android:text="站内信"
             android:textSize="18sp"
             android:gravity="center"
             android:textColor="#fff"/>
+        <!-- 垃圾箱 -->
         <ImageView
             android:id="@+id/mail_garbage"
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:src = "@mipmap/garbage"
             android:scaleType="fitCenter"
             android:layout_gravity="right"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginEnd="15dp"/>
+        <!-- 更多 -->
+        <ImageView
+            android:id = "@+id/mail_opt_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src = "@mipmap/more"
+            android:layout_marginEnd="10dp"/>
     </LinearLayout>
+    <!-- 待删除 -->
     <Button
         android:id="@+id/add_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发送站内信"/>
-   <ListView
+    <!-- 消息列表 -->
+    <ListView
         android:id="@+id/mail_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

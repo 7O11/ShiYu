@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.Toast;
 
 public class NotifyService extends Service {
@@ -22,6 +23,7 @@ public class NotifyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         //匿名类 新开线程执行查询操作
+        Log.i("print_ser","service");
         new Thread(new Runnable() {
             @Override
             public void run() {

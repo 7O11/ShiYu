@@ -32,6 +32,7 @@ import java.util.ResourceBundle;
 
 import static com.threeteam.shiyu.appNotify.MailDatabaseHelper.MAILBOX;
 import static com.threeteam.shiyu.appNotify.web.ALL;
+import static com.threeteam.shiyu.appNotify.web.YOUKU;
 
 enum web{
     MANGGUOTV,
@@ -49,16 +50,18 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
     private static List<MailItem> mails = new ArrayList<MailItem>();
     private static MailItemAdapter adapter;
     private static int WEB_ID;
+    private static int READ_FLAG;
     //view
     private Button add_mail;
     private ImageView backfromMail;
     private ImageView mailGarbage;
+    private ImageView moreOpt;
     private ListView listView;
     //handler
     private static Handler updateHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            fetchMail(WEB_ID);
+            fetchMail(WEB_ID, READ_FLAG);
             adapter.notifyDataSetChanged();
         }
     };
@@ -76,6 +79,21 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(this, NotifyService.class);
         startService(intent);
         //adapter
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DoParse x = new DoParse();
+                x.parseUpdateInfo(web.TENGXUN, "https://v.qq.com/detail/r/rpup19lfbuf2skc.html");
+                Log.i("print_star", x.normalInfo+" "+x.VIPInfo+" "+x.specTime);
+            }
+        }).start();
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        fetchMail(ALL.ordinal(),0);
+        adapter.notifyDataSetChanged();
     }
     @Override
     public void onClick(View v)
@@ -85,7 +103,7 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
             //TODO: delete
             case R.id.add_mail:{
                 addMail("这是测试,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                fetchMail(WEB_ID);
+                fetchMail(WEB_ID, READ_FLAG);
                 adapter.notifyDataSetChanged();
                 break;
             }
@@ -105,7 +123,7 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
                                     maildb.delete(MAILBOX, null,null);
                                 else
                                     maildb.delete(MAILBOX, "web_id = ?",new String[]{WEB_ID+""});
-                                fetchMail(ALL.ordinal());
+                                fetchMail(ALL.ordinal(), READ_FLAG);
                                 adapter.notifyDataSetChanged();
                             }
                         })
@@ -113,6 +131,10 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
                         .create();
                 dialog.show();
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
+                break;
+            }
+            case R.id.mail_opt_more:{
+                popOptMenu(v);
                 break;
             }
             default:
@@ -124,8 +146,9 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
         add_mail = (Button)findViewById(R.id.add_mail);
         backfromMail = (ImageView)findViewById(R.id.back_from_mail);
         mailGarbage = (ImageView)findViewById(R.id.mail_garbage) ;
+        moreOpt = (ImageView)findViewById(R.id.mail_opt_more) ;
         //initial
-        fetchMail(ALL.ordinal());
+        fetchMail(ALL.ordinal(),0);
         adapter = new MailItemAdapter(
                 MailBoxActivity.this, R.layout.mail_item_layout, mails);
         listView = (ListView)findViewById(R.id.mail_list);
@@ -134,6 +157,7 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
         add_mail.setOnClickListener(this);
         backfromMail.setOnClickListener(this);
         mailGarbage.setOnClickListener(this);
+        moreOpt.setOnClickListener(this);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -148,11 +172,12 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onMailIconClick(View v, final int iconId){
                 if(iconId == WEB_ID){
-                    fetchMail(ALL.ordinal());
+                    fetchMail(ALL.ordinal(),READ_FLAG);
                 }
                 else{
-                    fetchMail(iconId);
+                    fetchMail(iconId, READ_FLAG);
                 }
+                Log.i("print_icon","update");
                 adapter.notifyDataSetChanged();
             }
             //显示内容
@@ -183,7 +208,7 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
                 ContentValues values = new ContentValues();
                 values.put("read_flag",0);
                 maildb.update(MAILBOX,values,"title = ? and content=?",new String[]{title,content});
-                fetchMail(WEB_ID);
+                fetchMail(WEB_ID, READ_FLAG);
                 adapter.notifyDataSetChanged();
             }
             @Override
@@ -200,49 +225,63 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
         mail.put("title","标题"+String .valueOf(count++));
         mail.put("receive_time", sDateFormat.format(new Date()));
         mail.put("web_id", (int)(Math.random()*5));
+        mail.put("read_flag",0);
         maildb.insert(MAILBOX, null, mail);
     }
-    private static void fetchMail(int webid){
+    private static void fetchMail(int webid, int read_flag){
         WEB_ID = webid;
+        READ_FLAG = read_flag;
         mails.clear();
-        MailItem mail;
-        Cursor cursor = maildb.query(MAILBOX, null, null, null, null, null, null);
+        Log.i("print_fetch","read:"+read_flag+" web:"+webid);
+        Cursor cursor;
+        if(webid != ALL.ordinal()){
+            Log.i("print_fetch","in");
+            if(read_flag==1)
+                cursor = maildb.query(MAILBOX, null, "web_id=? and read_flag = ?", new String[]{webid+"",read_flag+""}, null, null, null);
+            else
+                cursor = maildb.query(MAILBOX, null, "web_id = ?", new String[]{webid+""}, null, null, null);
+        }
+        else{
+            if(read_flag == 1)
+                cursor = maildb.query(MAILBOX, null, "read_flag = ?", new String[]{read_flag+""}, null, null, null);
+            else
+                cursor = maildb.query(MAILBOX, null, null, null, null, null, null);
+        }
         try {
             if (cursor.moveToLast()) {
                 do {
+                    //取值
                     int id = cursor.getInt(cursor.getColumnIndex("web_id"));
-                    if(webid == ALL.ordinal() || webid == id) {
-                        String title = cursor.getString(cursor.getColumnIndex("title"));
-                        String content = cursor.getString(cursor.getColumnIndex("content"));
-                        int unread = cursor.getInt(cursor.getColumnIndex("read_flag"));
-                        String time = cursor.getString(cursor.getColumnIndex("receive_time"));
-                        //截取时间段
-                        Date date = sDateFormat.parse(time);
-                        long timelong = date.getTime();
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(date);
-                        long minus = System.currentTimeMillis() - timelong;
-                        //24h
-                        if (minus < 24 * 60 * 60 * 1000) {
-                            if(cal.get(Calendar.MINUTE)<10){
-                                time = String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":0" + String.valueOf(cal.get(Calendar.MINUTE));
-                            }
-                            else{
-                                time = String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(cal.get(Calendar.MINUTE));
-                            }
-                            if(cal.get(Calendar.HOUR_OF_DAY)==0){
-                                time = "0"+time;
-                            }
+                    String title = cursor.getString(cursor.getColumnIndex("title"));
+                    String content = cursor.getString(cursor.getColumnIndex("content"));
+                    int unread = cursor.getInt(cursor.getColumnIndex("read_flag"));
+                    String time = cursor.getString(cursor.getColumnIndex("receive_time"));
+                    Log.i("print_fet","web:"+id+" "+title+" "+content+" "+unread+" "+time);
+                    //截取时间段
+                    Date date = sDateFormat.parse(time);
+                    long timelong = date.getTime();
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    long minus = System.currentTimeMillis() - timelong;
+                    //24h
+                    if (minus < 24 * 60 * 60 * 1000) {
+                        if(cal.get(Calendar.MINUTE)<10){
+                            time = String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":0" + String.valueOf(cal.get(Calendar.MINUTE));
                         }
-                        //一年以内
-                        else if (minus < 365 * 24 * 60 * 60 * 1000) {
-                            time = String.valueOf(cal.get(Calendar.MONTH)) + "-" + String.valueOf(cal.get(Calendar.DATE));
-                        } else {
-                            time = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH)) + "-" + String.valueOf(cal.get(Calendar.DATE));
-
+                        else{
+                            time = String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(cal.get(Calendar.MINUTE));
                         }
-                        mails.add(new MailItem(id, title, content, (unread == 1), time));
+                        if(cal.get(Calendar.HOUR_OF_DAY)==0){
+                            time = "0"+time;
+                        }
                     }
+                    //一年以内
+                    else if (minus < 365 * 24 * 60 * 60 * 1000) {
+                        time = String.valueOf(cal.get(Calendar.MONTH)) + "-" + String.valueOf(cal.get(Calendar.DATE));
+                    } else {
+                        time = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH)) + "-" + String.valueOf(cal.get(Calendar.DATE));
+                    }
+                    mails.add(new MailItem(id, title, content, (unread == 1), time));
                 } while (cursor.moveToPrevious());
 
             }
@@ -263,11 +302,10 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
                 switch (item.getItemId()) {
                     case R.id.mail_renew: {
                         MailItem mItem = adapter.getItem(position);
-                        //            Toast.makeText(MailBoxActivity.this, "设为未读", Toast.LENGTH_SHORT).show();
                         ContentValues values = new ContentValues();
                         values.put("read_flag",1);
                         maildb.update(MAILBOX,values,"title = ? and content=?",new String[]{mItem.getTitle(),mItem.getContent()});
-                        fetchMail(WEB_ID);
+                        fetchMail(WEB_ID, READ_FLAG);
                         adapter.notifyDataSetChanged();
                         break;
                     }
@@ -275,7 +313,52 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
                         MailItem mItem = adapter.getItem(position);
                         Toast.makeText(MailBoxActivity.this, "已删除", Toast.LENGTH_SHORT).show();
                         maildb.delete(MAILBOX, "title=? and content=?",new String[]{mItem.getTitle(),mItem.getContent()});
-                        fetchMail(WEB_ID);
+                        fetchMail(WEB_ID, READ_FLAG);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
+    }
+    private void popOptMenu(View view){
+        PopupMenu optMenu = new PopupMenu(MailBoxActivity.this, view);
+        optMenu.getMenuInflater().inflate(R.menu.mail_opt_menu, optMenu.getMenu());
+        optMenu.show();
+        optMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // 4个功能
+                switch (item.getItemId()) {
+                    //仅显示未读
+                    case R.id.opt_only_new: {
+                        Log.i("print_pop", "only new");
+                        fetchMail(WEB_ID, 1);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                    case R.id.opt_all: {
+                        fetchMail(ALL.ordinal(), 0);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                    //全部标为已读
+                    case R.id.opt_all_done: {
+                        ContentValues values = new ContentValues();
+                        values.put("read_flag", 0);
+                        maildb.update(MAILBOX, values, null, null);
+                        fetchMail(WEB_ID, 0);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                    //删除所有已读
+                    case R.id.opt_all_done_delete:{
+                        maildb.delete(MAILBOX, "read_flag = ?", new String[]{"0"});
+                        fetchMail(ALL.ordinal(), 0);
                         adapter.notifyDataSetChanged();
                         break;
                     }

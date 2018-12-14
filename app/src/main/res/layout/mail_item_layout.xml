@@ -5,6 +5,7 @@
     android:minHeight="80dp"
     android:orientation="horizontal">
 
+    <!-- 来源icon -->
     <ImageView
         android:id = "@+id/web_icon"
         android:layout_width="50dp"
@@ -29,6 +30,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
+            <!-- 标题栏 -->
             <TextView
                 android:id = "@+id/mail_title"
                 android:layout_width="0dp"
@@ -41,12 +43,14 @@
                 android:singleLine="true"
                 android:ellipsize="middle"
                 android:layout_marginRight="20dp"/>
+            <!-- 时间戳 -->
             <TextView
                 android:id="@+id/mail_receive_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"/>
         </LinearLayout>
+        <!-- 信息内容 -->
         <TextView
             android:id = "@+id/mail_content"
             android:layout_width="match_parent"
