@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <com.kelsey.searchbox.library.widget.SearchListLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchlayout"
-        app:search_hint="输入搜索内容"
-        app:search_baground="@drawable/search_baground_shap">
-    </com.kelsey.searchbox.library.widget.SearchListLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#888"/>
 
     <com.lzy.widget.AlphaIndicator
         android:id="@+id/alphaIndicator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom">
+        android:layout_height="55dp"
+        android:orientation="horizontal">
 
         <com.lzy.widget.AlphaView
             android:layout_width="0dp"
@@ -60,4 +59,4 @@
             app:av_textColorSelected="#46c01b"/>
     </com.lzy.widget.AlphaIndicator>
 
-</RelativeLayout>
+</LinearLayout>

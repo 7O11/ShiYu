@@ -13,14 +13,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     private SearchListLayout searchLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.search_style);
+
         searchLayout = (SearchListLayout)findViewById(R.id.searchlayout);
         initData();
     }
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("data",str);
                 startActivity(GetWebInfoActivity.class, bundle);
+//                startActivity(CalendarActivity.class, bundle);
             }
             @Override
             public void Back() {
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             }
         },1);
     }
-
 
 
     public void startActivity(Class<?> openClass, Bundle bundle) {

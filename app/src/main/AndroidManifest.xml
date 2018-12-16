@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.kelsey.searchbox.search.MainActivity">
+        <activity android:name="com.kelsey.searchbox.cover.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +19,9 @@
         </activity>
         <activity android:name="com.kelsey.searchbox.search.GetWebInfoActivity"/>
         <activity android:name="com.kelsey.searchbox.search.VedioDisplayActivity"/>
+        <activity android:name="com.kelsey.searchbox.calendar.CalendarActivity"/>
+        <activity android:name="com.kelsey.searchbox.search.SearchActivity"/>
+        <activity android:name="com.kelsey.searchbox.collection.CollectionActivity"/>
 
     </application>
 
