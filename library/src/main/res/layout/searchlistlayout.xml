@@ -34,12 +34,12 @@
             android:background="#eeeeee"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
-        <com.kelsey.searchbox.library.widget.FlowLayout
+        <com.kelsey.shiyu.library.widget.FlowLayout
             android:padding="10dp"
             android:id="@+id/id_flowlayouthot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </com.kelsey.searchbox.library.widget.FlowLayout>
+        </com.kelsey.shiyu.library.widget.FlowLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -74,13 +74,13 @@
                 android:background="#eeeeee"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
-            <com.kelsey.searchbox.library.widget.SelfSearchListView
+            <com.kelsey.shiyu.library.widget.SelfSearchListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/gridviewolddata"
                 android:scrollbars="none"
                 android:gravity="center">
-            </com.kelsey.searchbox.library.widget.SelfSearchListView>
+            </com.kelsey.shiyu.library.widget.SelfSearchListView>
         </LinearLayout>
 
         <LinearLayout

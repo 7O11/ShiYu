@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kelsey.searchbox.search">
+    package="com.kelsey.shiyu.search">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -10,18 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.kelsey.searchbox.cover.MainActivity">
+        <activity android:name="com.kelsey.shiyu.cover.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kelsey.searchbox.search.GetWebInfoActivity"/>
-        <activity android:name="com.kelsey.searchbox.search.VedioDisplayActivity"/>
-        <activity android:name="com.kelsey.searchbox.calendar.CalendarActivity"/>
-        <activity android:name="com.kelsey.searchbox.search.SearchActivity"/>
-        <activity android:name="com.kelsey.searchbox.collection.CollectionActivity"/>
+        <activity android:name="com.kelsey.shiyu.search.GetWebInfoActivity"/>
+        <activity android:name="com.kelsey.shiyu.search.VedioDisplayActivity"/>
+        <activity android:name="com.kelsey.shiyu.calendar.CalendarActivity"/>
+        <activity android:name="com.kelsey.shiyu.search.SearchActivity"/>
+        <activity android:name="com.kelsey.shiyu.collection.CollectionActivity"/>
 
     </application>
 

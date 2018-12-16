@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left">
+        android:layout_gravity="start">
 
         <ImageView
             android:id="@+id/vedio_pic"
@@ -16,54 +16,58 @@
             android:layout_height="150dp"
             android:adjustViewBounds="true"
             android:maxWidth="120dp"
-            android:maxHeight="150dp" />
+            android:maxHeight="150dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/search_hint"/>
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="right">
+        android:layout_gravity="end">
 
         <TextView
             android:id="@+id/vedio_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:maxWidth="150dp"
             android:maxHeight="28dp"
             android:layout_marginTop="10dp"
             android:textColor="#000"
-            android:textSize="12sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_toLeftOf="@+id/vedio_socre"
+            android:layout_toStartOf="@+id/vedio_socre"
             android:text="评分: "
-            android:textColor="#000"
-            android:textSize="10sp" />
+            android:textColor="#383838"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/vedio_socre"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
             android:textColor="@color/mlcorange"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/vedio_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/vedio_title"
-            android:maxHeight="86dp"
+            android:maxLines="4"
+            android:ellipsize="end"
             android:layout_alignParentTop="true"
             android:layout_marginTop="40dp"
-            android:layout_marginRight="30dp"
-            android:textColor="#000"
-            android:textSize="10sp" />
+            android:layout_marginEnd="30dp"
+            android:lineSpacingExtra="5dp"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/vedio_origin"
@@ -71,11 +75,44 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="180dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="180dp"
             android:textColor="#69686c"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginStart="150dp"-->
+            <!--android:layout_marginEnd="30dp"-->
+            <!--android:text="收藏"-->
+            <!--android:textColor="#c9c7b5"-->
+            <!--android:textSize="12sp" />-->
+
+        <!--<Switch-->
+            <!--android:id="@+id/scroll_switch"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="2dp"-->
+            <!--android:layout_marginStart="180dp"-->
+            <!--android:layout_marginEnd="30dp"/>-->
+
+        <ImageView
+            android:id="@+id/collect_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/unpick"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="180dp"
+            android:tint="#b3aeae"
+            android:layout_marginEnd="30dp"/>
 
     </RelativeLayout>
+
 
 </LinearLayout>

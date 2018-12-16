@@ -4,66 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kelsey.searchbox.cover.MainActivity"
+    tools:context="com.kelsey.shiyu.cover.MainActivity"
     android:orientation="vertical">
 
-    <com.kelsey.searchbox.library.widget.SearchListLayout
+    <com.kelsey.shiyu.library.widget.SearchListLayout
         android:id="@+id/searchlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:search_baground="@drawable/search_baground_shap"
         app:search_hint="输入搜索内容"/>
-
-    <!--<FrameLayout-->
-        <!--android:id="@+id/container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--/>-->
-
-
-    <!--<com.lzy.widget.AlphaIndicator-->
-        <!--android:id="@+id/alphaIndicator"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_gravity="bottom">-->
-
-        <!--<com.lzy.widget.AlphaView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:padding="5dp"-->
-            <!--app:av_tabIconNormal="@mipmap/search_normal"-->
-            <!--app:av_tabIconSelected="@mipmap/search_selected"-->
-            <!--app:av_tabText="首页"-->
-            <!--app:av_tabTextSize="14sp"-->
-            <!--app:av_textColorNormal="#999999"-->
-            <!--app:av_textColorSelected="#46c01b"/>-->
-
-        <!--<com.lzy.widget.AlphaView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:padding="5dp"-->
-            <!--app:av_tabIconNormal="@mipmap/calendar_normal"-->
-            <!--app:av_tabIconSelected="@mipmap/calendar_selected"-->
-            <!--app:av_tabText="日历"-->
-            <!--app:av_tabTextSize="14sp"-->
-            <!--app:av_textColorNormal="#999999"-->
-            <!--app:av_textColorSelected="#46c01b"/>-->
-
-        <!--<com.lzy.widget.AlphaView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:padding="5dp"-->
-            <!--app:av_tabIconNormal="@mipmap/collect_normal"-->
-            <!--app:av_tabIconSelected="@mipmap/collect_selected"-->
-            <!--app:av_tabText="收藏夹"-->
-            <!--app:av_tabTextSize="14sp"-->
-            <!--app:av_textColorNormal="#999999"-->
-            <!--app:av_textColorSelected="#46c01b"/>-->
-    <!--</com.lzy.widget.AlphaIndicator>-->
 
 </RelativeLayout>
