@@ -7,11 +7,13 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.threeteam.shiyu.web;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.threeteam.shiyu.appNotify.web.*;
+import static com.threeteam.shiyu.web.*;
 
 public class Notifier{
     //update flag

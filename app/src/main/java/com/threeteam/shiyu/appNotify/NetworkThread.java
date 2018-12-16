@@ -3,6 +3,8 @@ package com.threeteam.shiyu.appNotify;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.threeteam.shiyu.web;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -119,7 +121,7 @@ class DoParse{
             latestInfo = "";
         }
     }
-    public boolean parseUpdateInfo(web webName, String dstUrl){
+    public void parseUpdateInfo(web webName, String dstUrl){
         Log.i("print_star", "parse update "+webName.ordinal());
         updateInfo = "";
         vipFlag = false;
@@ -176,8 +178,6 @@ class DoParse{
             if(vipFlag) VIPInfo += (daynumVIP[i]);
             normalInfo += (daynum[i]);
         }
-        if(normalInfo.equals("0000000")) return false;
-        return true;
     }
     private void parseAIQIYI(String str){
         //eg: 每日24:00更新三集 //每周六22:00更新一集;VIP会员抢先看一周 //周日至周四24点2集,周五至周六24点1集

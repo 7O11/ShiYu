@@ -11,13 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import static com.threeteam.shiyu.appNotify.web.BILIBILI;
-import static com.threeteam.shiyu.appNotify.web.MANGGUOTV;
-import static com.threeteam.shiyu.appNotify.web.TENGXUN;
-import static com.threeteam.shiyu.appNotify.web.YOUKU;
+import static com.threeteam.shiyu.web.*;
 
-public class MailItemAdapter extends ArrayAdapter<MailItem> {
-    private int resourceId;
+public class MailItemAdapter extends ArrayAdapter<MailItem> {private int resourceId;
     public MailItemAdapter(Context context, int textViewResourceId,
                            List<MailItem> objects){
         super(context, textViewResourceId, objects);
@@ -32,7 +28,7 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {
         final View view;
         ViewHolder viewHolder;
 
-       if(convertView == null){
+        if(convertView == null){
             view = LayoutInflater.from(getContext()).inflate(resourceId, null);
             viewHolder = new ViewHolder();
             viewHolder.webIcon = (ImageView) view.findViewById(R.id.web_icon);
@@ -51,7 +47,7 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {
             viewHolder.webIcon.setBackgroundResource(id2web(mItem.getIconId(), true));
         }
         else{
-             viewHolder.webIcon.setBackgroundResource(id2web(mItem.getIconId(), false));
+            viewHolder.webIcon.setBackgroundResource(id2web(mItem.getIconId(), false));
         }
         //点击icon，触发列表筛选更新操作
         viewHolder.webIcon.setOnClickListener(new View.OnClickListener(){
@@ -61,7 +57,7 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {
             }
         });
         //点击信息，呈现消息窗口
-       viewHolder.mailContent.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mailContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mailItemListener.onMailSubjectClick(mItem.getTitle(),mItem.getContent());

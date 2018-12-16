@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+    <!-- 番剧图片 -->
+   <ImageView
+        android:id="@+id/drama_view"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:src = "@mipmap/hyrz"
+        android:scaleType="fitCenter"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
+        <!-- 标题和来源 -->
+           <TextView
+                android:id="@+id/drama_title"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_toEndOf="@id/drama_view"
+                android:layout_marginTop="15dp"
+                android:text="火影忍者"
+                android:textColor="#383838"
+                android:textSize="16sp"/>
+            <TextView
+                android:id = "@+id/drama_from"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:textSize="12sp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="17dp"
+                android:layout_marginEnd="15dp"
+                android:text="来源：优酷"/>
+        <TextView
+            android:id="@+id/drama_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/drama_view"
+            android:layout_below="@id/drama_title"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="14sp"
+            android:lineSpacingExtra="5dp"
+            android:text = "故事从主人公漩涡鸣人的孤儿生活开始，他的父母为了保护村子……"
+            android:maxLines="4"
+            android:ellipsize="end"/>
+
+
+</RelativeLayout>

@@ -28,20 +28,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import static com.threeteam.shiyu.appNotify.MailDatabaseHelper.MAILBOX;
-import static com.threeteam.shiyu.appNotify.web.ALL;
-import static com.threeteam.shiyu.appNotify.web.YOUKU;
+import static com.threeteam.shiyu.web.*;
 
-enum web{
-    MANGGUOTV,
-    TENGXUN,
-    BILIBILI,
-    YOUKU,
-    AIQIYI,
-    ALL
-}
+
 public class MailBoxActivity extends AppCompatActivity implements View.OnClickListener{
     //helper
     private MailDatabaseHelper mailHelper;
@@ -83,7 +74,7 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void run() {
                 DoParse x = new DoParse();
-                x.parseUpdateInfo(web.TENGXUN, "https://v.qq.com/detail/r/rpup19lfbuf2skc.html");
+                x.parseUpdateInfo(TENGXUN, "https://v.qq.com/detail/r/rpup19lfbuf2skc.html");
                 Log.i("print_star", x.normalInfo+" "+x.VIPInfo+" "+x.specTime);
             }
         }).start();
