@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">视域</string>
+<<<<<<< HEAD
     <string name="clear_all_mail_dialog">确定要清空当前列表中的所有消息吗？</string>
     <string name="clear_all_fav_dialog">确定要清空收藏夹吗？</string>
+=======
+    <string name="app_description">Android drawer icon with material design animation</string>
+    <string name="drawer_open">drawer_open</string>
+    <string name="drawer_close">drawer_close</string>
+>>>>>>> origin/ShiYu_Search
 </resources>

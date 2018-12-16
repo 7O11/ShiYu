@@ -9,6 +9,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+<<<<<<< HEAD
+=======
+            <option value="$PROJECT_DIR$/library" />
+>>>>>>> origin/ShiYu_Search
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
