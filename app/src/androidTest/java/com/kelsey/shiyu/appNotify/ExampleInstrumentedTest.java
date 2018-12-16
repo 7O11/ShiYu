@@ -1,4 +1,4 @@
-package com.threeteam.shiyu.appNotify;
+package com.kelsey.shiyu.appNotify;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.threeteam.shiyu.appNotify", appContext.getPackageName());
+        assertEquals("com.kelsey.shiyu.appNotify", appContext.getPackageName());
     }
 }

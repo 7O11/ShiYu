@@ -1,4 +1,4 @@
-package com.threeteam.shiyu.appNotify;
+package com.kelsey.shiyu.appNotify;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import static com.threeteam.shiyu.web.*;
+import static com.kelsey.shiyu.web.*;
 
 public class MailItemAdapter extends ArrayAdapter<MailItem> {private int resourceId;
     public MailItemAdapter(Context context, int textViewResourceId,

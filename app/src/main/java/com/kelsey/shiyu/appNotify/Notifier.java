@@ -1,19 +1,14 @@
-package com.threeteam.shiyu.appNotify;
+package com.kelsey.shiyu.appNotify;
 
-import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.threeteam.shiyu.web;
+import com.kelsey.shiyu.web;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import static com.threeteam.shiyu.web.*;
+import static com.kelsey.shiyu.web.*;
 
 public class Notifier{
     //update flag

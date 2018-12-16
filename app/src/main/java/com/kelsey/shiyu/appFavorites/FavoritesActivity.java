@@ -1,4 +1,4 @@
-package com.threeteam.shiyu.appFavorites;
+package com.kelsey.shiyu.appFavorites;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -8,25 +8,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.michaldrabik.tapbarmenulib.TapBarMenu;
-import com.threeteam.shiyu.appNotify.R;
-import com.threeteam.shiyu.web;
+import com.kelsey.shiyu.appNotify.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.threeteam.shiyu.web.AIQIYI;
-import static com.threeteam.shiyu.web.ALL;
-import static com.threeteam.shiyu.web.BILIBILI;
-import static com.threeteam.shiyu.web.MANGGUOTV;
-import static com.threeteam.shiyu.web.TENGXUN;
-import static com.threeteam.shiyu.web.YOUKU;
+import static com.kelsey.shiyu.web.AIQIYI;
+import static com.kelsey.shiyu.web.ALL;
+import static com.kelsey.shiyu.web.BILIBILI;
+import static com.kelsey.shiyu.web.MANGGUOTV;
+import static com.kelsey.shiyu.web.TENGXUN;
+import static com.kelsey.shiyu.web.YOUKU;
 
 public class FavoritesActivity extends AppCompatActivity  implements View.OnClickListener{
     private TapBarMenu iconMenu;

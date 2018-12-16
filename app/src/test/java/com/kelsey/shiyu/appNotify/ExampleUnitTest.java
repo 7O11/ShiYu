@@ -1,4 +1,4 @@
-package com.threeteam.shiyu.appNotify;
+package com.kelsey.shiyu.appNotify;
 
 import org.junit.Test;
 

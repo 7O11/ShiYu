@@ -1,4 +1,4 @@
-package com.threeteam.shiyu.appFavorites;
+package com.kelsey.shiyu.appFavorites;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,13 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.threeteam.shiyu.appNotify.R;
-
-import org.w3c.dom.Text;
+import com.kelsey.shiyu.appNotify.R;
 
 import java.util.List;
 
@@ -46,6 +43,7 @@ public class FavoriteAdapter extends ArrayAdapter {
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
+        new ImageTools().getIcon("http://r1.ykimg.com/05160000594B5E6BADBA1F1B5C0C6DAA", viewHolder);
   /*      viewHolder.name.setText(fItem.getName());
         viewHolder.content.setText(fItem.getContent());
         viewHolder.from.setText(fItem.getFrom());*/
@@ -73,14 +71,14 @@ public class FavoriteAdapter extends ArrayAdapter {
     public void setOnFavItemClickListener(onFavItemListener favItemListener){
         this.favItemListener = favItemListener;
     }
-    class ViewHolder{
-        ImageView dramaGraphic;
-        TextView name;
-        TextView content;
-        TextView from;
-        Button btnDelete;
-       RelativeLayout favItem;
-    }
+}
+class ViewHolder{
+    ImageView dramaGraphic;
+    TextView name;
+    TextView content;
+    TextView from;
+    Button btnDelete;
+    RelativeLayout favItem;
 }
 class FavItem {
     private String name;//番名

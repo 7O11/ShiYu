@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
-        android:src = "@mipmap/hyrz"
         android:scaleType="fitCenter"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"/>
@@ -43,8 +42,8 @@
             android:layout_marginEnd="10dp"
             android:textSize="14sp"
             android:lineSpacingExtra="5dp"
-            android:text = "故事从主人公漩涡鸣人的孤儿生活开始，他的父母为了保护村子……"
-            android:maxLines="3"
+            android:text = "故事从主人公漩涡鸣人的孤儿生活开始，他的父母为了保护村子，将攻击村子九尾妖狐封印到了他体内，鸣人因此受尽了村人的冷落，只是拼命用各种恶作剧试图吸引大家的注意力。好在还是有依鲁卡老师的关心，鸣人的性格才没有变得扭曲，他总是干劲十足、非常乐观。 为了让更多的人认可自己，鸣人的目标是成为火影。"
+            android:maxLines="2"
             android:ellipsize="end"/>
 
 

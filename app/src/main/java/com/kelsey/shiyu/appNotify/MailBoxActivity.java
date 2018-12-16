@@ -1,4 +1,4 @@
-package com.threeteam.shiyu.appNotify;
+package com.kelsey.shiyu.appNotify;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -29,8 +29,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.threeteam.shiyu.appNotify.MailDatabaseHelper.MAILBOX;
-import static com.threeteam.shiyu.web.*;
+import static com.kelsey.shiyu.appNotify.MailDatabaseHelper.MAILBOX;
+import static com.kelsey.shiyu.web.*;
 
 
 public class MailBoxActivity extends AppCompatActivity implements View.OnClickListener{
