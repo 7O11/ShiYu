@@ -1,5 +1,8 @@
 package com.threeteam.shiyu.appFavorites;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +31,8 @@ import static com.threeteam.shiyu.web.YOUKU;
 public class FavoritesActivity extends AppCompatActivity  implements View.OnClickListener{
     private TapBarMenu iconMenu;
     private ImageView itemMg, itemYk,itemBili,itemAqy,itemTx;
+    private ImageView favBack;
+    private ImageView favTrash;
     private ListView mlistView;
     private List<FavItem> favorites;
     private FavoriteAdapter adapter;
@@ -81,7 +86,29 @@ public class FavoritesActivity extends AppCompatActivity  implements View.OnClic
                 iconMenu.toggle();
                 break;
             }
+            //返回
+            case R.id.back_from_f:{
+                finish();
+                break;
+            }
             //清空收藏列表
+            case R.id.f_garbage:{
+                AlertDialog dialog = new AlertDialog.Builder(FavoritesActivity.this)
+                        .setMessage(R.string.clear_all_fav_dialog)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //TODO: 清空数据库操作
+                                fetchFavorites(ALL.ordinal());
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
+                break;
+            }
             default:
                 break;
         }
@@ -93,6 +120,8 @@ public class FavoritesActivity extends AppCompatActivity  implements View.OnClic
         itemBili = (ImageView)findViewById(R.id.item_bili);
         itemTx = (ImageView)findViewById(R.id.item_tx) ;
         itemYk = (ImageView)findViewById(R.id.item_yk);
+        favBack = (ImageView)findViewById(R.id.back_from_f) ;
+        favTrash = (ImageView)findViewById(R.id.f_garbage);
         //
         favorites = new ArrayList<FavItem>();
         favorites.add(new FavItem("番名","aaaaa","f","no","u"));
@@ -109,6 +138,8 @@ public class FavoritesActivity extends AppCompatActivity  implements View.OnClic
         itemBili.setOnClickListener(this);
         itemTx.setOnClickListener(this);
         itemYk.setOnClickListener(this);
+        favBack.setOnClickListener(this);
+        favTrash.setOnClickListener(this);
         //
         mlistView = (ListView)findViewById(R.id.list);
         View v = LayoutInflater.from(FavoritesActivity.this).inflate(R.layout.list_last_layout, null);

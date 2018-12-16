@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">视域</string>
     <string name="clear_all_mail_dialog">确定要清空当前列表中的所有消息吗？</string>
+    <string name="clear_all_fav_dialog">确定要清空收藏夹吗？</string>
 </resources>
