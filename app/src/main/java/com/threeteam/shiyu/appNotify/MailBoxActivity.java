@@ -173,10 +173,16 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
             }
             //显示内容
             @Override
-            public void onMailSubjectClick(String title, String content){
+            public void onMailSubjectClick(String title, String content, String url){
                 AlertDialog dialog = new AlertDialog.Builder(MailBoxActivity.this)
                     .setTitle(title)
                     .setMessage(content)
+                    .setPositiveButton("跳转播放", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //TODO: 跳转到给定url播放
+                            }
+                    })
                     .create();
                     dialog.show();
                 try {
@@ -272,7 +278,7 @@ public class MailBoxActivity extends AppCompatActivity implements View.OnClickLi
                     } else {
                         time = String.valueOf(cal.get(Calendar.YEAR)) + "-" + String.valueOf(cal.get(Calendar.MONTH)) + "-" + String.valueOf(cal.get(Calendar.DATE));
                     }
-                    mails.add(new MailItem(id, title, content, (unread == 1), time));
+                    mails.add(new MailItem(id, title, content, (unread == 1), time, ""));
                 } while (cursor.moveToPrevious());
 
             }

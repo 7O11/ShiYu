@@ -13,6 +13,12 @@ public class NetworkThread extends Thread {
     private DoParse webAnalyzer;//html解析类
     private web webName;    //网站类别
     private String dstUrl;  //番剧详情页面url
+    private boolean eventType;  //操作类型。false代表检查更新，true代表收藏番剧。
+
+    public void setEventType(boolean eventType) {
+        this.eventType = eventType;
+    }
+
     public NetworkThread(web webName, String dstUrl){
         webAnalyzer = new DoParse();
         this.webName = webName;
@@ -24,7 +30,10 @@ public class NetworkThread extends Thread {
     @Override
     public void run(){
         try{
-            webAnalyzer.parseLatestInfo(webName, dstUrl);
+            if(eventType){
+                webAnalyzer.parseUpdateInfo(webName,dstUrl);
+            }
+            else webAnalyzer.parseLatestInfo(webName, dstUrl);
         }catch (Exception e) {
             // TODO: thread exception
             Log.i("print_netWorkThread","error");
@@ -123,6 +132,7 @@ class DoParse{
     }
     public void parseUpdateInfo(web webName, String dstUrl){
         Log.i("print_star", "parse update "+webName.ordinal());
+        parseLatestInfo(webName,dstUrl);
         updateInfo = "";
         vipFlag = false;
         daynum = new int[10];
@@ -142,14 +152,13 @@ class DoParse{
                 case BILIBILI:{
                     Document doc = Jsoup.connect(dstUrl).get();
                     Element media_info = doc.getElementsByClass("media-info-time").first();
-                    Log.i("print_star", media_info.text());
+             //       Log.i("print_star", media_info.text());
                     if(media_info!=null){
                         parseAIQIYI(media_info.text());
                     }
                     break;
                 }
                 case YOUKU:{
-                    parseLatestInfo(webName, dstUrl);
                     Log.i("print_star", latestInfo);
                     if(latestInfo.contains("（")) {
                         updateInfo = latestInfo.substring(latestInfo.indexOf('（'));

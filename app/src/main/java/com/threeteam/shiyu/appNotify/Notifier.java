@@ -18,6 +18,7 @@ import static com.threeteam.shiyu.web.*;
 public class Notifier{
     //update flag
     private boolean flag = false;
+    private boolean eventType;
     //mail format
     private static final String UPDATE_TITLE = "更新: ";
     private static final String UPDATE_CONTENT_LEFT = "最新状态：";
@@ -26,6 +27,10 @@ public class Notifier{
     private SQLiteDatabase collectdb;
     Notifier(SQLiteDatabase c){
         this.collectdb = c;
+    }
+
+    public void setEventType(boolean eventType) {
+        this.eventType = eventType;
     }
 
     public boolean isUpdate() {
@@ -49,6 +54,7 @@ public class Notifier{
             try{
                 //check all updating drama
                 thread = new NetworkThread(webs[i], urls[i]);
+                thread.setEventType(eventType);
                 thread.start();
                 thread.join();
                 latestInfo = thread.get_latestEpiInfo();
@@ -63,6 +69,7 @@ public class Notifier{
                     mail.put("read_flag", 1);
                     mail.put("receive_time", MailBoxActivity.sDateFormat.format(new Date()));
                     mail.put("web_id", webs[i].ordinal());
+                    mail.put("url", urls[i]);
                     MailBoxActivity.maildb.insert(MailDatabaseHelper.MAILBOX, null, mail);
                 }
             }catch (Exception e){

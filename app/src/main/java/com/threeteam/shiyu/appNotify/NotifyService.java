@@ -29,6 +29,7 @@ public class NotifyService extends Service {
             public void run() {
                 //TODO:change 必须改为收藏数据库！！！
                 Notifier notifier = new Notifier(null);
+                notifier.setEventType(false);
                 notifier.checkUpdate();
                 if(notifier.isUpdate()){
                     MailBoxActivity.updateMailList();

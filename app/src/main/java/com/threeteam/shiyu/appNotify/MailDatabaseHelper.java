@@ -12,7 +12,8 @@ public class MailDatabaseHelper extends SQLiteOpenHelper {
             + "read_flag integer, " //未读：1
             + "receive_time text, "    //消息接收时间,格式：2018-12-29 13:00
             + "web_id integer,"    //更新来源
-            + "primary key(title, content))";
+            + "url text, "  //视频链接
+            + "primary key(url, receive_time, content))";
     private Context mailContext;
 
     public MailDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){

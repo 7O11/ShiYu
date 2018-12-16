@@ -44,7 +44,7 @@
             android:textSize="14sp"
             android:lineSpacingExtra="5dp"
             android:text = "故事从主人公漩涡鸣人的孤儿生活开始，他的父母为了保护村子……"
-            android:maxLines="4"
+            android:maxLines="3"
             android:ellipsize="end"/>
 
 

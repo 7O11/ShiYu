@@ -60,13 +60,13 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {private int resourc
         viewHolder.mailContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mailItemListener.onMailSubjectClick(mItem.getTitle(),mItem.getContent());
+                mailItemListener.onMailSubjectClick(mItem.getTitle(),mItem.getContent(), mItem.getUrl());
             }
         });
         viewHolder.mailTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mailItemListener.onMailSubjectClick(mItem.getTitle(),mItem.getContent());
+                mailItemListener.onMailSubjectClick(mItem.getTitle(),mItem.getContent(), mItem.getUrl());
             }
         });
         //长按响应
@@ -95,7 +95,7 @@ public class MailItemAdapter extends ArrayAdapter<MailItem> {private int resourc
     //内部textView的监听接口
     public interface onMailItemListener{
         void onMailIconClick(View v, int iconId);
-        void onMailSubjectClick(String title, String content);
+        void onMailSubjectClick(String title, String content, String url);
         boolean onItemLongClick(View v, int position);
     }
     private onMailItemListener mailItemListener;
@@ -129,12 +129,14 @@ class MailItem{
     private String content;
     private boolean unread;
     private String time;
-    public MailItem(int id, String t, String c, boolean unread, String time){
+    private String url;
+    public MailItem(int id, String t, String c, boolean unread, String time, String url){
         this.icon = id;
         this.title = t;
         this.content = c;
         this.unread = unread;
         this.time = time;
+        this.url = url;
     }
     public int getIconId(){
         return this.icon;
@@ -150,5 +152,9 @@ class MailItem{
     }
     public String getTime(){
         return this.time;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }
