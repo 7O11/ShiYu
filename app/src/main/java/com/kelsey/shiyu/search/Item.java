@@ -1,5 +1,9 @@
 package com.kelsey.shiyu.search;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.widget.ImageView;
+
 public class Item {
     private String vedioTitle;   //视频标题
     private String vedioUrl;     //视频链接地址
@@ -7,6 +11,7 @@ public class Item {
     private String vedioPicInfo;    //视频宣传图
     private String vedioScore;  //视频评分
     private String vedioOrigin; //视频来源
+    private ImageView collectIcon;
 
     public Item(String title, String url, String info, String picInfo, String score, String origin) {
         this.vedioTitle = title;
@@ -53,5 +58,18 @@ public class Item {
         this.vedioUrl = url;
     }
 
+    public int getNewColor(ColorFilter old_color){
+        int color;
+        if(old_color.equals(Color.rgb(179,174,174))){
+            color = Color.RED;
+        } else {
+            color = Color.rgb(179,174,174);
+        }
+        return color;
+    }
 
+    public int getInitColor(){
+//        collectIcon.setColorFilter(Color.rgb(179,174,174));
+        return Color.rgb(179,174,174);
+    }
 }

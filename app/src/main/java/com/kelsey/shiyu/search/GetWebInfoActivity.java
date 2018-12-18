@@ -49,22 +49,10 @@ public class GetWebInfoActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 if(msg.arg1 == 5){
-//                    if(vedioList.isEmpty()){
-//                        setContentView(R.layout.empty_result);
-//                    }
+                    if(vedioList.isEmpty()){
+                        setContentView(R.layout.empty_result);
+                    }
                     adapter = new VedioAdapter(GetWebInfoActivity.this,vedioList);
-                    adapter.setOnIconClickListener(new VedioAdapter.onIconClickListener(){
-                        @Override
-                        public void onReceiveCollectionData(int position, ViewHolder viewHolder) {
-                            int color;
-                            if(viewHolder.collectIcon.getColorFilter()==null || viewHolder.collectIcon.getColorFilter().equals(Color.rgb(179,174,174))){
-                                color = Color.RED;
-                            } else {
-                                color = Color.rgb(179,174,174);
-                            }
-                            viewHolder.collectIcon.setColorFilter(color);
-                        }
-                    });
                     lv.setAdapter(adapter);
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
