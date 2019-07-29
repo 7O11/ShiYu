@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kelsey.shiyu.cover.MainActivity"
+    android:orientation="vertical">
+
+    <com.kelsey.shiyu.library.widget.SearchListLayout
+        android:id="@+id/searchlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:search_baground="@drawable/search_baground_shap"
+        app:search_hint="输入搜索内容"/>
+
+</RelativeLayout>
